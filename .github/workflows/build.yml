@@ -1,15 +1,15 @@
 name: Build iOS Tweak
 
 on:
-  workflow_dispatch: # Cho phép bạn bấm nút tự Build bằng tay lúc nào tùy thích
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # Chọn máy chủ Linux chạy ngầm chuẩn bài
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Đã nâng cấp lên v4 tại đây
 
       - name: Setup Theos Action
         uses: Randomblock1/theos-action@v1
@@ -22,7 +22,7 @@ jobs:
           make package FINALPACKAGE=1
 
       - name: Upload Dylib Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # Đã nâng cấp lên v4 tại đây
         with:
           name: CuongBypass-Dylib
           path: .theos/obj/debug/CuongBypass.dylib
