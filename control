@@ -1,0 +1,8 @@
+Package: com.cuong.zenbypass
+Name: CuongBypass
+Depends: mobilesubstrate
+Version: 1.0.0
+Architecture: iphoneos-arm
+Description: Menu Bypass Key by Pham Hai Cuong
+Maintainer: Pham Hai Cuong
+Author: Pham Hai Cuong
