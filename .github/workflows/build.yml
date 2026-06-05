@@ -9,20 +9,27 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4  # Đã nâng cấp lên v4 tại đây
+        uses: actions/checkout@v4
 
       - name: Setup Theos Action
         uses: Randomblock1/theos-action@v1
         with:
           theos-src: 'https://github.com/theos/theos'
 
+      # -- ĐÂY LÀ ĐOẠN LỆNH MỚI THÊM ĐỂ TRỊ BỆNH WINDOWS LINE ENDING --
+      - name: Fix Windows Line Endings
+        run: |
+          sudo apt-get install -y dos2unix
+          dos2unix control Makefile CuongBypass.plist Tweak.xm
+
       - name: Build Tweak
         run: |
           export THEOS=$GITHUB_WORKSPACE/theos
-          make package FINALPACKAGE=1
+          make package
 
       - name: Upload Dylib Artifact
-        uses: actions/upload-artifact@v4  # Đã nâng cấp lên v4 tại đây
+        uses: actions/upload-artifact@v4
         with:
           name: CuongBypass-Dylib
-          path: .theos/obj/debug/CuongBypass.dylib
+          # Dùng dấu ** để tự động vớt file dylib ở bất kỳ thư mục nào
+          path: .theos/obj/**/*.dylib
