@@ -1,0 +1,28 @@
+name: Build iOS Tweak
+
+on:
+  workflow_dispatch: # Cho phép bạn bấm nút tự Build bằng tay lúc nào tùy thích
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Chọn máy chủ Linux chạy ngầm chuẩn bài
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Theos Action
+        uses: Randomblock1/theos-action@v1
+        with:
+          theos-src: 'https://github.com/theos/theos'
+
+      - name: Build Tweak
+        run: |
+          export THEOS=$GITHUB_WORKSPACE/theos
+          make package FINALPACKAGE=1
+
+      - name: Upload Dylib Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: CuongBypass-Dylib
+          path: .theos/obj/debug/CuongBypass.dylib
